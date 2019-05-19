@@ -5,4 +5,5 @@ public interface CartRepository {
 	Cart get(String cartId);
 	Cart find(String cartId);
 	void delete(String cartId);
+	void clear();
 }

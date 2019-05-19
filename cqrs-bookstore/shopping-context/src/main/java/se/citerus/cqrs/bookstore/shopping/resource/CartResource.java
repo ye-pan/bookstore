@@ -1,6 +1,7 @@
 package se.citerus.cqrs.bookstore.shopping.resource;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import se.citerus.cqrs.bookstore.api.ApiMessageDto;
 import se.citerus.cqrs.bookstore.shopping.api.AddItemRequest;
 import se.citerus.cqrs.bookstore.shopping.api.CartDto;
 import se.citerus.cqrs.bookstore.shopping.api.CartDtoFactory;
@@ -41,8 +43,9 @@ public class CartResource {
 	}
 
 	@PostMapping
-	public void initCart(@RequestBody @Valid CreateCartRequest cart) {
+	public ResponseEntity<ApiMessageDto> initCart(@RequestBody @Valid CreateCartRequest cart) {
 		cartRepository.save(new Cart(cart.cartId));
+		return ResponseEntity.ok(new ApiMessageDto("操作成功!"));
 	}
 
 	@PostMapping("{cartId}/items")
@@ -74,6 +77,13 @@ public class CartResource {
 		cartRepository.delete(cartId);
 		logger.info("Shopping cart for session [{}] cleared", cartId);
 	}
+
+	@DeleteMapping("deleteAll")
+	public ResponseEntity<String> deleteAllCart() {
+		cartRepository.clear();
+		return ResponseEntity.ok("操作成功!");
+	}
+
 	private void assertProductExists(String productId, ProductDto product) {
 		if(product == null) {
 			//TODO throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity("Product with id '" + productId + "' could not be found").build());

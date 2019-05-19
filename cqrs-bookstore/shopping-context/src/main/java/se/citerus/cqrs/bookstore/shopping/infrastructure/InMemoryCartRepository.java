@@ -36,5 +36,10 @@ public class InMemoryCartRepository implements CartRepository {
 	public void delete(String cartId) {
 		sessions.remove(cartId);
 	}
-	
+
+	@Override
+	public void clear() {
+		sessions.clear();
+
+	}
 }

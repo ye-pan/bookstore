@@ -172,7 +172,8 @@ function initCart(onDone) {
   var newCartId = guid();
   postJSON("carts", JSON.stringify({"cartId": newCartId }))
       .error(function (data) {
-        alert("Error: " + data);
+        console.log(data);
+        alert("initCart error");
       })
       .done(function () {
         console.log("Successfully initialized new session: " + newCartId);
