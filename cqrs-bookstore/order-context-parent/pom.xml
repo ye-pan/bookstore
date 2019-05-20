@@ -10,6 +10,22 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>order-context-parent</artifactId>
+    <packaging>pom</packaging>
+    <groupId>se.citerus.cqrs.bookstore.ordercontext</groupId>
 
+    <modules>
+        <module>eventbus-contract</module>
+        <module>order-command</module>
+        <module>order-query</module>
+        <module>sagas</module>
+        <module>publisher-contract-command</module>
+        <module>order-application</module>
+    </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+    </dependencies>
 </project>
