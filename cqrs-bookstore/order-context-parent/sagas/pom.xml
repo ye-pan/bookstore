@@ -11,5 +11,15 @@
 
     <artifactId>sagas</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>se.citerus.cqrs.bookstore.ordercontext</groupId>
+            <artifactId>order-command</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>se.citerus.cqrs.bookstore.ordercontext</groupId>
+            <artifactId>publisher-contract-command</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

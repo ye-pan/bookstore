@@ -11,5 +11,19 @@
 
     <artifactId>publisher-contract-command</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>se.citerus.cqrs.bookstore</groupId>
+            <artifactId>cqrs-lib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>se.citerus.cqrs.bookstore.ordercontext</groupId>
+            <artifactId>eventbus-contract</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
