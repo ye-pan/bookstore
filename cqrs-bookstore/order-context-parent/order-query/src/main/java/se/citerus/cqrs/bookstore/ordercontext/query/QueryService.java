@@ -1,5 +1,6 @@
 package se.citerus.cqrs.bookstore.ordercontext.query;
 
+import org.springframework.stereotype.Service;
 import se.citerus.cqrs.bookstore.ordercontext.client.productcatalog.ProductCatalogClient;
 import se.citerus.cqrs.bookstore.ordercontext.client.productcatalog.ProductDto;
 import se.citerus.cqrs.bookstore.ordercontext.order.OrderId;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class QueryService {
     private final OrderListDenormalizer orderListDenormalizer;
     private final OrdersPerDayAggregator ordersPerDayAggregator;
@@ -37,7 +39,7 @@ public class QueryService {
         return new PublisherContractId(product.publisherContractId);
     }
 
-    public Map<LocalDate, Integer> getOrdersPerDay() {
+    public Map<Long, Integer> getOrdersPerDay() {
         return ordersPerDayAggregator.getOrdersPerDay();
     }
 }

@@ -16,6 +16,6 @@ public class ApplicationConfig {
 	
 	@Bean
 	public ProductCatalogClient productCatalogClient(RestTemplate restTemplate) {
-		return ProductCatalogClient.create(restTemplate, "http://localhost:9998");
+		return ProductCatalogClient.create(restTemplate, "http://localhost:9998/products/");
 	}
 }

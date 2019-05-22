@@ -6,7 +6,7 @@ import se.citerus.cqrs.bookstore.GenericId;
 import se.citerus.cqrs.bookstore.domain.AggregateRoot;
 
 public interface DomainEventStore {
-	List<DomainEvent<? extends GenericId>> loadEvents(GenericId id);
-	void save(GenericId id, Class<? extends AggregateRoot<? extends GenericId>> type, List<DomainEvent<? extends GenericId>> events);
-	List<DomainEvent<? extends GenericId>> getAllEvents();
+	<ID extends GenericId> List<DomainEvent<ID>> loadEvents(ID id);
+	<ID extends GenericId> void save(ID id, Class<? extends AggregateRoot> type, List<DomainEvent<ID>> events);
+	<ID extends GenericId> List<DomainEvent<ID>> getAllEvents();
 }

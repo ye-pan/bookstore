@@ -5,6 +5,7 @@ import se.citerus.cqrs.bookstore.event.DomainEventListener;
 import se.citerus.cqrs.bookstore.ordercontext.order.event.OrderPlacedEvent;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -12,13 +13,12 @@ import java.util.TreeMap;
  * Simple in memory aggregator counting placed order per day based on order timestamp.
  */
 public class OrdersPerDayAggregator implements DomainEventListener {
-    private final TreeMap<LocalDate, Integer> orders = new TreeMap<>();
+    private final TreeMap<Long, Integer> orders = new TreeMap<>();
 
     @Subscribe
     public void handleEvent(OrderPlacedEvent event) {
-        LocalDate localDate = LocalDate.ofEpochDay(event.timestamp);
-        Integer ordersPerDay = orders.get(localDate);
-        orders.put(localDate, nullSafeIncrease(ordersPerDay));
+        Integer ordersPerDay = orders.get(event.timestamp);
+        orders.put(event.timestamp, nullSafeIncrease(ordersPerDay));
     }
 
     private Integer nullSafeIncrease(Integer integer) {
@@ -30,7 +30,7 @@ public class OrdersPerDayAggregator implements DomainEventListener {
         return true;
     }
 
-    public Map<LocalDate, Integer> getOrdersPerDay() {
+    public Map<Long, Integer> getOrdersPerDay() {
         return orders;
     }
 }

@@ -1,11 +1,14 @@
 package se.citerus.cqrs.bookstore.ordercontext.infrastructure;
 
+import org.springframework.stereotype.Repository;
 import se.citerus.cqrs.bookstore.ordercontext.order.OrderId;
 import se.citerus.cqrs.bookstore.ordercontext.query.orderlist.OrderProjection;
 import se.citerus.cqrs.bookstore.ordercontext.query.orderlist.OrderProjectionRepository;
 
 import java.util.*;
 
+
+@Repository
 public class InMemOrderProjectionRepository implements OrderProjectionRepository {
 
     private static final OrderTimestampComparator ORDER_TIMESTAMP_COMPARATOR = new OrderTimestampComparator();
