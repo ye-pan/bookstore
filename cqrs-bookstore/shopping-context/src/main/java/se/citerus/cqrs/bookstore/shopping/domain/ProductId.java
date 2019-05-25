@@ -1,18 +1,14 @@
 package se.citerus.cqrs.bookstore.shopping.domain;
 
-import java.util.UUID;
-
+import lombok.Data;
 import se.citerus.cqrs.bookstore.domain.ValueObject;
 
+@Data
 public class ProductId extends ValueObject {
 	private static final long serialVersionUID = 846932255214297714L;
-	public final String id;
+	private final String productId;
 	
-	public ProductId(String id) {
-		this.id = id;
-	}
-	
-	public static ProductId randomId() {
-		return new ProductId(UUID.randomUUID().toString());
+	public ProductId(String productId) {
+		this.productId = productId;
 	}
 }

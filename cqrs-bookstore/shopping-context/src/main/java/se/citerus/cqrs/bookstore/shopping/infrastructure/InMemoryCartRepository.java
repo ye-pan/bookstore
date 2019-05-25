@@ -15,8 +15,8 @@ public class InMemoryCartRepository implements CartRepository {
 	
 	@Override
 	public void save(Cart cart) {
-		if(sessions.putIfAbsent(cart.cartId, cart) != null) {
-			throw new IllegalArgumentException(String.format("Shopping cart with id '%s' already exists", cart.cartId));
+		if(sessions.putIfAbsent(cart.getCartId(), cart) != null) {
+			throw new IllegalArgumentException(String.format("Shopping cart with id '%s' already exists", cart.getCartId()));
 		}
 	}
 	

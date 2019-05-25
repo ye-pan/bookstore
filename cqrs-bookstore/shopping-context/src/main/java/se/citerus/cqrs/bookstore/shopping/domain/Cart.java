@@ -1,12 +1,17 @@
 package se.citerus.cqrs.bookstore.shopping.domain;
 
+import lombok.Data;
+
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Data
 public class Cart {
-	public final String cartId;
+	private final String cartId;
+
 	private final Map<ProductId, LineItem> lineItems = new LinkedHashMap<>();
 	
 	public Cart(String cartId) {
@@ -14,13 +19,13 @@ public class Cart {
 	}
 	
 	public void add(Item item) {
-		LineItem lineItem = lineItems.get(item.productId);
+		LineItem lineItem = lineItems.get(item.getProductId());
 		if(lineItem == null) {
 			lineItem = new LineItem(item);
 		} else {
 			lineItem.increaseQuantity();
 		}
-		lineItems.put(item.productId, lineItem);
+		lineItems.put(item.getProductId(), lineItem);
 	}
 	
 	public Collection<LineItem> getItems() {
@@ -31,10 +36,10 @@ public class Cart {
 		return lineItems.size();
 	}
 	
-	public long getTotalPrice() {
-		long totalPrice = 0;
+	public BigDecimal getTotalPrice() {
+		BigDecimal totalPrice = BigDecimal.ZERO;
 		for(LineItem lineItem : lineItems.values()) {
-			totalPrice += lineItem.getTotalPrice();
+			totalPrice = totalPrice.add(lineItem.getTotalPrice());
 		}
 		return totalPrice;
 	}

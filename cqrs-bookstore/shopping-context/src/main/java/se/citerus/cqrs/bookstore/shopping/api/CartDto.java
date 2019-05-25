@@ -1,12 +1,15 @@
 package se.citerus.cqrs.bookstore.shopping.api;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import lombok.Data;
 import se.citerus.cqrs.bookstore.TransportObject;
 
+@Data
 public class CartDto extends TransportObject {
-	public String cartId;
-	public long totalPrice;
-	public int totalQuantity;
-	public List<LineItemDto> lineItems;
+	private String cartId;
+	private BigDecimal totalPrice;
+	private int totalQuantity;
+	private List<LineItemDto> lineItems;
 }

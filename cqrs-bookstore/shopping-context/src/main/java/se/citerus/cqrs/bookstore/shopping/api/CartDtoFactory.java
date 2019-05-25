@@ -1,5 +1,6 @@
 package se.citerus.cqrs.bookstore.shopping.api;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,23 +17,23 @@ public class CartDtoFactory {
 		}
 		
 		CartDto cartDto = new CartDto();
-		cartDto.cartId = cart.cartId;
-		cartDto.totalPrice = cart.getTotalPrice();
-		cartDto.totalQuantity = cart.getTotalQuantity();
-		cartDto.lineItems = lineItems;
+		cartDto.setCartId(cart.getCartId());
+		cartDto.setTotalPrice(cart.getTotalPrice());
+		cartDto.setTotalQuantity(cart.getTotalQuantity());
+		cartDto.setLineItems(lineItems);
 		return cartDto;
 	}
 	
 	private static LineItemDto toLineItemDto(LineItem lineItem) {
-		long price = lineItem.getTotalPrice();
+		BigDecimal price = lineItem.getTotalPrice();
 		int quantity = lineItem.getQuantity();
 		Item item = lineItem.getItem();
 		LineItemDto itemDto = new LineItemDto();
-		itemDto.productId = item.productId.id;
-		itemDto.title = item.title;
-		itemDto.price = item.price;
-		itemDto.quantity = quantity;
-		itemDto.totalPrice = price;
+		itemDto.setProductId(item.getProductId().getProductId());
+		itemDto.setTitle(item.getTitle());
+		itemDto.setPrice(item.getPrice());
+		itemDto.setQuantity(quantity);
+		itemDto.setTotalPrice(price);
 		return itemDto;
 	}
 }

@@ -1,7 +1,6 @@
-package se.citerus.cqrs.bookstore.shopping.resource;
+package se.citerus.cqrs.bookstore.shopping.controller;
 
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,21 +29,21 @@ import se.citerus.cqrs.bookstore.shopping.domain.ProductId;
 
 @RestController
 @RequestMapping(path = "carts")
-public class CartResource {
+public class CartController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private final ProductCatalogClient productCatalogClient;
 	
 	private final CartRepository cartRepository;
 	
-	public CartResource(ProductCatalogClient productCatalogClient, CartRepository cartRepository) {
+	public CartController(ProductCatalogClient productCatalogClient, CartRepository cartRepository) {
 		this.productCatalogClient = productCatalogClient;
 		this.cartRepository = cartRepository;
 	}
 
 	@PostMapping
 	public ResponseEntity<ApiMessageDto> initCart(@RequestBody @Valid CreateCartRequest cart) {
-		cartRepository.save(new Cart(cart.cartId));
+		cartRepository.save(new Cart(cart.getCartId()));
 		return ResponseEntity.ok(new ApiMessageDto("操作成功!"));
 	}
 
@@ -52,9 +51,9 @@ public class CartResource {
 	public CartDto addItem(@PathVariable("cartId") String cartId, @RequestBody AddItemRequest addItemRequest) {
 		Cart cart = cartRepository.get(cartId);
 		logger.debug("Got addItem request " + addItemRequest);
-		ProductDto product = productCatalogClient.getProduct(addItemRequest.productId);
-		assertProductExists(addItemRequest.productId, product);
-		Item item = new Item(new ProductId(addItemRequest.productId), product.book.title, product.price);
+		ProductDto product = productCatalogClient.getProduct(addItemRequest.getProductId());
+		assertProductExists(addItemRequest.getProductId(), product);
+		Item item = new Item(new ProductId(addItemRequest.getProductId()), product.getBook().getTitle(), product.getPrice());
 		logger.info("Adding item to cart: " + item);
 		cart.add(item);
 		return CartDtoFactory.fromCart(cart);

@@ -1,11 +1,10 @@
 package se.citerus.cqrs.bookstore.shopping.client.productcatalog;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import lombok.Data;
 import se.citerus.cqrs.bookstore.TransportObject;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class BookDto extends TransportObject {
-	public String title;
-	public String isbn;
+	private String title;
+	private String isbn;
 }

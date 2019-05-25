@@ -10,11 +10,6 @@ import se.citerus.cqrs.bookstore.TransportObject;
 
 @Data
 public class BookDto extends TransportObject {
-
-	@NotEmpty
-	@Pattern(regexp = GenericId.ID_PATTERN)
-	private String bookId;
-	
 	@NotEmpty
 	private String isbn;
 	

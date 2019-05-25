@@ -1,22 +1,29 @@
 package se.citerus.cqrs.bookstore.shopping.client.productcatalog;
 
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
+@Service
 public class ProductCatalogClient {
+
 	private final RestTemplate client;
-	private final String serviceUrl;
-	
-	private ProductCatalogClient(RestTemplate client, String serviceUrl) {
+
+	@Value("${service.product.uri}")
+	private String uri;
+	@Value("${service.product.name}")
+	private String name;
+
+	private ProductCatalogClient(RestTemplate client) {
 		this.client = client;
-		this.serviceUrl = serviceUrl;
-	}
-	
-	public static ProductCatalogClient create(RestTemplate client, String serviceUrl) {
-		return new ProductCatalogClient(client, serviceUrl);
 	}
 	
 	public ProductDto getProduct(String productId) {
-		return client.getForObject(serviceUrl + productId, ProductDto.class);
+		String url = uri + "/{productId}";
+		log.debug("url:{} parameter:{}", url, productId);
+		return client.getForObject(url, ProductDto.class, productId);
 	}
 }
