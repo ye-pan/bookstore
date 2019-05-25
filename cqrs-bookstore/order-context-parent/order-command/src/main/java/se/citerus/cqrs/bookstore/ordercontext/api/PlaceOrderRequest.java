@@ -13,13 +13,13 @@ public class PlaceOrderRequest extends TransportObject {
     @Pattern(regexp = GenericId.ID_PATTERN)
     public String orderId;
 
-    @NotNull
+    @NotEmpty
     public String customerName;
 
-    @NotNull
+    @NotEmpty
     public String customerEmail;
 
-    @NotNull
+    @NotEmpty
     public String customerAddress;
 
     @NotNull

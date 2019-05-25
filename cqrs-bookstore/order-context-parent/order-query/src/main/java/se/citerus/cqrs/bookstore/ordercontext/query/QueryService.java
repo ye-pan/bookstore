@@ -10,7 +10,6 @@ import se.citerus.cqrs.bookstore.ordercontext.query.orderlist.OrderListDenormali
 import se.citerus.cqrs.bookstore.ordercontext.query.orderlist.OrderProjection;
 import se.citerus.cqrs.bookstore.ordercontext.query.sales.OrdersPerDayAggregator;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 

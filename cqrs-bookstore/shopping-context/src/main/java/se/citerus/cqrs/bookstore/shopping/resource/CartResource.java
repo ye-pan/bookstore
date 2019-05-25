@@ -86,7 +86,6 @@ public class CartResource {
 
 	private void assertProductExists(String productId, ProductDto product) {
 		if(product == null) {
-			//TODO throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity("Product with id '" + productId + "' could not be found").build());
 			throw new NullPointerException();
 		}
 	}
