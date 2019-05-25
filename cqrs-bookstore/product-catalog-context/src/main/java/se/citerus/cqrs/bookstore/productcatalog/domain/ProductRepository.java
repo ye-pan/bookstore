@@ -1,12 +1,10 @@
 package se.citerus.cqrs.bookstore.productcatalog.domain;
 
-import java.util.Collection;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ProductRepository {
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product, String> {
 	
-	Collection<Product> getProducts();
-	
-	Product getProduct(String productId);
-	
-	void save(Product product);
 }

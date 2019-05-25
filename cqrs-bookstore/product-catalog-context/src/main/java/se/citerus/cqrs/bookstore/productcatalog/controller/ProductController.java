@@ -27,34 +27,33 @@ public class ProductController {
 	
 	private ProductRepository productRepository;
 
-	@Autowired
 	public ProductController(ProductRepository productRepository) {
 		this.productRepository = productRepository;
 	}
 	
 	@GetMapping("{productId}")
 	public ProductDto getProduct(@PathVariable("productId") String productId) {
-		Product product = productRepository.getProduct(productId);
+		Product product = productRepository.getOne(productId);
 		if(product == null) {
 			throw new IllegalArgumentException("No such product: " + productId);
 		}
-		logger.info("Returning product with id [{}]", product.getProductId());
+		logger.info("Returning product with id [{}]", product.getId());
 		return ProductDtoFactory.fromProduct(product);
 	}
 	
 	@PostMapping
 	public void createProduct(@RequestBody @Valid ProductDto request) {
 		BookDto bookDto = request.getBook();
-		Book book = new Book(bookDto.getBookId(), bookDto.getIsbn(), bookDto.getTitle(), bookDto.getDescription());
-		Product product = new Product(request.getProductId(), book, request.getPrice(), request.getPublisherContractId());
-		logger.info("Saving product with id [{}]", request.getProductId());
+		Book book = new Book(bookDto.getIsbn(), bookDto.getTitle(), bookDto.getDescription());
+		Product product = new Product(book, request.getPrice(), request.getPublisherContractId());
 		productRepository.save(product);
+		logger.info("Saving product with id [{}]", product.getId());
 	}
 	
 	@GetMapping
 	public Collection<ProductDto> getProducts() {
 		Collection<ProductDto> products = new ArrayList<ProductDto>();
-		for (Product product : productRepository.getProducts()) {
+		for (Product product : productRepository.findAll()) {
 			products.add(ProductDtoFactory.fromProduct(product));
 		}
 		logger.info("Returning [{}] products", products.size());

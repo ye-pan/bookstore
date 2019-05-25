@@ -11,7 +11,7 @@ public class ProductDtoFactory {
 	
 	private static ProductDto toProduct(Product product, BookDto book) {
 		ProductDto productDto = new ProductDto();
-		productDto.setProductId(product.getProductId());
+		productDto.setProductId(product.getId());
 		productDto.setPrice(product.getPrice());
 		productDto.setPublisherContractId(product.getPublisherContractId());
 		productDto.setBook(book);
@@ -20,7 +20,6 @@ public class ProductDtoFactory {
 	
 	private static BookDto toBook(Book book) {
 		BookDto bookDto = new BookDto();
-		bookDto.setBookId(book.getBookId());
 		bookDto.setIsbn(book.getIsbn());
 		bookDto.setTitle(book.getTitle());
 		bookDto.setDescription(book.getDescription());

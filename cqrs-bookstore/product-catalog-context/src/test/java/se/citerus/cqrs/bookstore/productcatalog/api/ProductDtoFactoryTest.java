@@ -24,15 +24,14 @@ public class ProductDtoFactoryTest {
 
     @Test
     public void fromProduct3() {
-        Book book = new Book(UUID.randomUUID().toString(), "12344321", "junit test", "a junit test case");
-        Product product = new Product(UUID.randomUUID().toString(), book, new BigDecimal(String.valueOf(55.55)), "1234431");
+        Book book = new Book("12344321", "junit test", "a junit test case");
+        Product product = new Product(book, new BigDecimal(String.valueOf(55.55)), "1234431");
         ProductDto productDto = ProductDtoFactory.fromProduct(product);
         assertNotNull(productDto);
         assertNotNull(productDto.getBook());
-        assertNotNull(product.getProductId());
+        assertNotNull(product.getId());
         assertNotNull(product.getPrice());
         assertNotNull(product.getPublisherContractId());
-        assertNotNull(product.getBook().getBookId());
         assertNotNull(product.getBook().getTitle());
         assertNotNull(product.getBook().getIsbn());
         assertNotNull(product.getBook().getDescription());
