@@ -1,9 +1,7 @@
-package se.citerus.cqrs.bookstore.productcatalog.resource;
+package se.citerus.cqrs.bookstore.productcatalog.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.UUID;
-
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +22,13 @@ import se.citerus.cqrs.bookstore.productcatalog.domain.ProductRepository;
 
 @RestController
 @RequestMapping(path = "products")
-public class ProductResource {
+public class ProductController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private ProductRepository productRepository;
 
 	@Autowired
-	public ProductResource(ProductRepository productRepository) {
+	public ProductController(ProductRepository productRepository) {
 		this.productRepository = productRepository;
 	}
 	
@@ -40,18 +38,16 @@ public class ProductResource {
 		if(product == null) {
 			throw new IllegalArgumentException("No such product: " + productId);
 		}
-		logger.info("Returning product with id [{}]", product.productId);
+		logger.info("Returning product with id [{}]", product.getProductId());
 		return ProductDtoFactory.fromProduct(product);
 	}
 	
 	@PostMapping
 	public void createProduct(@RequestBody @Valid ProductDto request) {
-		request.productId = UUID.randomUUID().toString().replace("-", "");
-		request.book.bookId = UUID.randomUUID().toString().replace("-", "");
-		BookDto bookDto = request.book;
-		Book book = new Book(request.book.bookId, bookDto.isbn, bookDto.title, bookDto.description);
-		Product product = new Product(request.productId, book, request.price, request.publisherContractId);
-		logger.info("Saving product with id [{}]", request.productId);
+		BookDto bookDto = request.getBook();
+		Book book = new Book(bookDto.getBookId(), bookDto.getIsbn(), bookDto.getTitle(), bookDto.getDescription());
+		Product product = new Product(request.getProductId(), book, request.getPrice(), request.getPublisherContractId());
+		logger.info("Saving product with id [{}]", request.getProductId());
 		productRepository.save(product);
 	}
 	

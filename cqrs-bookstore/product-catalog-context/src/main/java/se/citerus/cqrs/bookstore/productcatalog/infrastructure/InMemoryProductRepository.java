@@ -19,7 +19,7 @@ public class InMemoryProductRepository implements ProductRepository {
 	
 	private static final Comparator<Product> PRODUCT_COMPARATOR = new Comparator<Product>() {
 		public int compare(Product o1, Product o2) {
-			return o1.book.title.compareTo(o2.book.title);
+			return o1.getBook().getTitle().compareTo(o2.getBook().getTitle());
 		}
 	};
 
@@ -37,6 +37,6 @@ public class InMemoryProductRepository implements ProductRepository {
 	
 	@Override
 	public void save(Product product) {
-		products.put(product.productId, product);
+		products.put(product.getProductId(), product);
 	}
 }

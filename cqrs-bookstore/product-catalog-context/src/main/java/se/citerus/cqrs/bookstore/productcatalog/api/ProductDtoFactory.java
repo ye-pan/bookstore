@@ -6,24 +6,24 @@ import se.citerus.cqrs.bookstore.productcatalog.domain.Product;
 public class ProductDtoFactory {
 	
 	public static ProductDto fromProduct(Product product) {
-		return toProduct(product, toBook(product.book));
+		return toProduct(product, toBook(product.getBook()));
 	}
 	
 	private static ProductDto toProduct(Product product, BookDto book) {
 		ProductDto productDto = new ProductDto();
-		productDto.productId = product.productId;
-		productDto.price = product.price;
-		productDto.publisherContractId = product.publisherContractId;
-		productDto.book = book;
+		productDto.setProductId(product.getProductId());
+		productDto.setPrice(product.getPrice());
+		productDto.setPublisherContractId(product.getPublisherContractId());
+		productDto.setBook(book);
 		return productDto;
 	}
 	
 	private static BookDto toBook(Book book) {
 		BookDto bookDto = new BookDto();
-		bookDto.bookId = book.bookId;
-		bookDto.isbn = book.isbn;
-		bookDto.title = book.title;
-		bookDto.description = book.description;
+		bookDto.setBookId(book.getBookId());
+		bookDto.setIsbn(book.getIsbn());
+		bookDto.setTitle(book.getTitle());
+		bookDto.setDescription(book.getDescription());
 		return bookDto;
 	}
 }

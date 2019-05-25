@@ -1,4 +1,4 @@
-package se.citerus.cqrs.bookstore.productcatalog.application;
+package se.citerus.cqrs.bookstore.productcatalog.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -3,18 +3,26 @@ package se.citerus.cqrs.bookstore.productcatalog.api;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import lombok.Data;
+import se.citerus.cqrs.bookstore.GenericId;
 import se.citerus.cqrs.bookstore.TransportObject;
 
+import java.math.BigDecimal;
+
+@Data
 public class ProductDto extends TransportObject {
-	
-	public String productId;
+
+	@NotEmpty
+	@Pattern(regexp = GenericId.ID_PATTERN)
+	private String productId;
 	
 	@Valid
-	public BookDto book;
+	private BookDto book;
 
-	@Min(0)
-	public long price;
+	@Min(1)
+	private BigDecimal price;
 	
 	@NotEmpty
-	public String publisherContractId;
+	private String publisherContractId;
 }
