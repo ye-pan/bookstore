@@ -17,7 +17,7 @@ public class CartDtoFactory {
 		}
 		
 		CartDto cartDto = new CartDto();
-		cartDto.setCartId(cart.getCartId());
+		cartDto.setCartId(cart.getId());
 		cartDto.setTotalPrice(cart.getTotalPrice());
 		cartDto.setTotalQuantity(cart.getTotalQuantity());
 		cartDto.setLineItems(lineItems);

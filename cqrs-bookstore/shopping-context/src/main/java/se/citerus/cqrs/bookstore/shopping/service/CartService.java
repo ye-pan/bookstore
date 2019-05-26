@@ -3,6 +3,7 @@ package se.citerus.cqrs.bookstore.shopping.service;
 import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.citerus.cqrs.bookstore.shopping.api.AddItemRequest;
 import se.citerus.cqrs.bookstore.shopping.api.CartDto;
 import se.citerus.cqrs.bookstore.shopping.api.CartDtoFactory;
@@ -25,11 +26,12 @@ public class CartService {
         this.productCatalogClient = productCatalogClient;
     }
 
+    @Transactional
     public CartDto addItem(String cartId, AddItemRequest addItemRequest) {
-        Cart cart = cartRepository.get(cartId);
+        Cart cart = cartRepository.getOne(cartId);
         log.debug("Got addItem request " + addItemRequest);
         ProductDto product = productCatalogClient.getProduct(addItemRequest.getProductId());
-        Preconditions.checkArgument(product != null && product.getBook() != null, String.format("不存在书籍"));
+        Preconditions.checkArgument(product != null && product.getBook() != null, "不存在书籍");
         Item item = new Item(new ProductId(addItemRequest.getProductId()), product.getBook().getTitle(), product.getPrice());
         log.info("Adding item to cart: " + item);
         cart.add(item);

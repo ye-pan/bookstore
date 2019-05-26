@@ -1,21 +1,44 @@
 package se.citerus.cqrs.bookstore.shopping.domain;
 
 import lombok.Data;
-
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 @Data
+@Entity
+@Table(name = "cart")
+@EntityListeners(AuditingEntityListener.class)
+@GenericGenerator(name = "cartId", strategy = "uuid")
 public class Cart {
-	private final String cartId;
 
+	@Id
+	@GeneratedValue(generator = "cartId")
+	private String id;
+
+	@OneToMany(targetEntity = LineItem.class, cascade = CascadeType.ALL)
+	@MapKeyClass(ProductId.class)
+	@JoinColumn(name = "cart_id")
 	private final Map<ProductId, LineItem> lineItems = new LinkedHashMap<>();
-	
-	public Cart(String cartId) {
-		this.cartId = cartId;
+
+	@CreatedDate
+	@Column
+	private Date createTime;
+
+	@LastModifiedDate
+	@Column
+	private Date lastUpdateTime;
+
+	public Cart() {
+
+	}
+
+	public Cart(String id) {
+		this.id = id;
 	}
 	
 	public void add(Item item) {

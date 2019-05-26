@@ -50,7 +50,7 @@ public class CartController {
 
 	@GetMapping("{cartId}")
 	public ResponseEntity<TransportObject> getCart(@PathVariable("cartId") String cartId) {
-		Cart cart = cartRepository.find(cartId);
+		Cart cart = cartRepository.getOne(cartId);
 		if(cart == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiMessageDto(String.format("Cart with id '%s' does not exist", cartId)));
 		} else {
@@ -61,13 +61,7 @@ public class CartController {
 	
 	@DeleteMapping("{cartId}")
 	public void deleteCart(@PathVariable("cartId") String cartId) {
-		cartRepository.delete(cartId);
+		cartRepository.deleteById(cartId);
 		logger.info("Shopping cart for session [{}] cleared", cartId);
-	}
-
-	@DeleteMapping("deleteAll")
-	public ResponseEntity<String> deleteAllCart() {
-		cartRepository.clear();
-		return ResponseEntity.ok("操作成功!");
 	}
 }
