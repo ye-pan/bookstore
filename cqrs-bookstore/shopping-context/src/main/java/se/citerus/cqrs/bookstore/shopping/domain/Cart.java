@@ -1,7 +1,6 @@
 package se.citerus.cqrs.bookstore.shopping.domain;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,11 +12,9 @@ import java.util.*;
 @Entity
 @Table(name = "cart")
 @EntityListeners(AuditingEntityListener.class)
-@GenericGenerator(name = "cartId", strategy = "uuid")
 public class Cart {
 
 	@Id
-	@GeneratedValue(generator = "cartId")
 	private String id;
 
 	@OneToMany(targetEntity = LineItem.class, cascade = CascadeType.ALL)
