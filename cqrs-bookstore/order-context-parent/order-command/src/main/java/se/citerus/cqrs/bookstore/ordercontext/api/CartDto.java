@@ -6,6 +6,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CartDto {
@@ -15,7 +16,7 @@ public class CartDto {
     public String cartId;
 
     @Min(1)
-    public long totalPrice;
+    public BigDecimal totalPrice;
 
     @Min(1)
     public int totalQuantity;

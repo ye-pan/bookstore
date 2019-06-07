@@ -9,3 +9,4 @@ frok from [criter bookstore-cqrs-example](https://github.com/citerus/bookstore-c
 5. 学习使用cqrs-bookstore ok 
 6. 使用JPA改造Repository，增加对应单元测试
    product-catalog-context ok
+   shopping-context ok

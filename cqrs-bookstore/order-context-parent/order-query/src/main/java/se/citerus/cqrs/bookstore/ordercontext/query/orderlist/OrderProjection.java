@@ -4,17 +4,18 @@ import se.citerus.cqrs.bookstore.ordercontext.order.OrderId;
 import se.citerus.cqrs.bookstore.ordercontext.order.OrderStatus;
 import se.citerus.cqrs.bookstore.ordercontext.query.Projection;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderProjection extends Projection {
     private final OrderId orderId;
     private final long orderPlacedTimestamp;
-    private final long orderAmount;
+    private final BigDecimal orderAmount;
     private final String customerName;
     private final List<OrderLineProjection> orderLines;
     private OrderStatus status;
-    public OrderProjection(OrderId orderId, long orderPlacedTimestamp, String customerName, long orderAmount, List<OrderLineProjection> orderLines, OrderStatus status) {
+    public OrderProjection(OrderId orderId, long orderPlacedTimestamp, String customerName, BigDecimal orderAmount, List<OrderLineProjection> orderLines, OrderStatus status) {
         this.orderId = orderId;
         this.orderPlacedTimestamp = orderPlacedTimestamp;
         this.customerName = customerName;
@@ -35,7 +36,7 @@ public class OrderProjection extends Projection {
         return customerName;
     }
 
-    public long getOrderAmount() {
+    public BigDecimal getOrderAmount() {
         return orderAmount;
     }
 

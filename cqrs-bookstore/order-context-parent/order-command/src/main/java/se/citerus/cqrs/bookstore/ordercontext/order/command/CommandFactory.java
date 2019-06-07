@@ -9,6 +9,7 @@ import se.citerus.cqrs.bookstore.ordercontext.order.ProductId;
 import se.citerus.cqrs.bookstore.ordercontext.order.domain.CustomerInformation;
 import se.citerus.cqrs.bookstore.ordercontext.order.domain.OrderLine;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class CommandFactory {
     public PlaceOrderCommand toCommand(PlaceOrderRequest request) {
         List<OrderLine> itemsToOrder = getOrderLines(request.cart);
         CustomerInformation customerInformation = getCustomerInformation(request);
-        long totalPrice = request.cart.totalPrice;
+        BigDecimal totalPrice = request.cart.totalPrice;
         return new PlaceOrderCommand(new OrderId(request.orderId), customerInformation, itemsToOrder, totalPrice);
     }
 
@@ -31,7 +32,7 @@ public class CommandFactory {
             ProductId productId = new ProductId(lineItem.productId);
             String title = lineItem.title;
             int quantity = lineItem.quantity;
-            long price = lineItem.price;
+            BigDecimal price = lineItem.price;
             itemsToOrder.add(new OrderLine(productId, title, quantity, price));
         }
         return itemsToOrder;

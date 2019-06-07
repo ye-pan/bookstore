@@ -7,13 +7,14 @@ import se.citerus.cqrs.bookstore.ordercontext.order.OrderStatus;
 import se.citerus.cqrs.bookstore.ordercontext.order.event.OrderActivatedEvent;
 import se.citerus.cqrs.bookstore.ordercontext.order.event.OrderPlacedEvent;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Order extends AggregateRoot<OrderId> {
     private OrderStatus status;
 
-    public void place(OrderId orderId, CustomerInformation customerInformation, List<OrderLine> orderLines, long totalAmount) {
+    public void place(OrderId orderId, CustomerInformation customerInformation, List<OrderLine> orderLines, BigDecimal totalAmount) {
         assertHasNotBeanPlaced();
         assertMoreThanZeroOrderLines(orderLines);
         applyChange(new OrderPlacedEvent(orderId, nextVersion(), now(), toCustomerInformation(customerInformation), toOrderLines(orderLines), totalAmount));

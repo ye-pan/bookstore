@@ -7,18 +7,20 @@ import se.citerus.cqrs.bookstore.ordercontext.publishercontract.PublisherContrac
 import se.citerus.cqrs.bookstore.ordercontext.publishercontract.event.PublisherContractRegisteredEvent;
 import se.citerus.cqrs.bookstore.ordercontext.publishercontract.event.PurchaseRegisteredEvent;
 
+import java.math.BigDecimal;
+
 public class PublisherContract extends AggregateRoot<PublisherContractId> {
     private double feePercentage;
     private long limit;
-    private long accumulatedFee;
+    private BigDecimal accumulatedFee;
 
     public void register(PublisherContractId publisherContractId, String name, double feePercentage, long limit) {
         assertHasNotBeenRegistered();
         applyChange(new PublisherContractRegisteredEvent(publisherContractId, nextVersion(), now(), name, feePercentage, limit));
     }
 
-    public void registerPurchase(ProductId productId, long unitPrice, int quantity) {
-        long purchaseAmount = unitPrice * quantity;
+    public void registerPurchase(ProductId productId, BigDecimal unitPrice, int quantity) {
+        BigDecimal purchaseAmount = unitPrice.multiply(BigDecimal.valueOf(quantity));
         AccumulatedFee newFee = new AccumulatedFee(accumulatedFee, limit, feePercentage).addPurchase(purchaseAmount);
         applyChange(new PurchaseRegisteredEvent(id(), nextVersion(), now(), productId, purchaseAmount, newFee.lastPurchaseFee(), newFee.accumulatedFee()));
     }
@@ -30,7 +32,7 @@ public class PublisherContract extends AggregateRoot<PublisherContractId> {
     void handleEvent(PublisherContractRegisteredEvent event) {
         this.feePercentage = event.feePercentage;
         this.limit = event.limit;
-        this.accumulatedFee = 0;
+        this.accumulatedFee = BigDecimal.ZERO;
     }
 
     void handleEvent(PurchaseRegisteredEvent event) {

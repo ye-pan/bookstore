@@ -13,8 +13,8 @@ public class AccumulatedFee extends ValueObject {
     private final BigDecimal feePercentage;
     private final Fee lastPurchaseFee;
 
-    public AccumulatedFee(long accumulatedFee, long limit, double feePercentage) {
-        this(new BigDecimal(accumulatedFee).divide(TO_FROM_CENTS), new BigDecimal(limit).divide(TO_FROM_CENTS), new BigDecimal(feePercentage), Fee.ZERO);
+    public AccumulatedFee(BigDecimal accumulatedFee, long limit, double feePercentage) {
+        this(accumulatedFee.divide(TO_FROM_CENTS), new BigDecimal(limit).divide(TO_FROM_CENTS), new BigDecimal(feePercentage), Fee.ZERO);
     }
 
     public AccumulatedFee(BigDecimal accumulatedFee, BigDecimal limit, BigDecimal feePercentage, Fee lastPurchaseFee) {
@@ -25,7 +25,7 @@ public class AccumulatedFee extends ValueObject {
         this.lastPurchaseFee = lastPurchaseFee;
     }
 
-    public AccumulatedFee addPurchase(long purchaseAmount) {
+    public AccumulatedFee addPurchase(BigDecimal purchaseAmount) {
         if(limitReached()) {
             return new AccumulatedFee(accumulatedFee, limit, feePercentage, Fee.ZERO);
         } else {
@@ -33,8 +33,8 @@ public class AccumulatedFee extends ValueObject {
         }
     }
 
-    private AccumulatedFee getFee(long purchaseAmount) {
-        BigDecimal feeAmount = new BigDecimal(purchaseAmount).divide(TO_FROM_CENTS).multiply(percentageMulitiplier);
+    private AccumulatedFee getFee(BigDecimal purchaseAmount) {
+        BigDecimal feeAmount = purchaseAmount.divide(TO_FROM_CENTS).multiply(percentageMulitiplier);
         BigDecimal newAccumulatedFee = accumulatedFee.add(feeAmount);
         if(exceedsLimit(newAccumulatedFee)) {
             return new AccumulatedFee(limit, limit, feePercentage, new Fee(limit.subtract(accumulatedFee).doubleValue()));
@@ -43,12 +43,12 @@ public class AccumulatedFee extends ValueObject {
         }
     }
 
-    public long lastPurchaseFee() {
-        return lastPurchaseFee.feeAmount().multiply(TO_FROM_CENTS).longValue();
+    public BigDecimal lastPurchaseFee() {
+        return lastPurchaseFee.feeAmount().multiply(TO_FROM_CENTS);
     }
 
-    public long accumulatedFee() {
-        return accumulatedFee.multiply(TO_FROM_CENTS).longValue();
+    public BigDecimal accumulatedFee() {
+        return accumulatedFee.multiply(TO_FROM_CENTS);
     }
 
     private boolean exceedsLimit(BigDecimal add) {
