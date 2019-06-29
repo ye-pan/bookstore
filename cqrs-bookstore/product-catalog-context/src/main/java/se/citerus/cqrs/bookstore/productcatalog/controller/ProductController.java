@@ -21,7 +21,6 @@ import se.citerus.cqrs.bookstore.productcatalog.domain.ProductRepository;
 
 
 @RestController
-@RequestMapping(path = "products")
 public class ProductController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -33,7 +32,7 @@ public class ProductController {
 	
 	@GetMapping("{productId}")
 	public ProductDto getProduct(@PathVariable("productId") String productId) {
-		Product product = productRepository.getOne(productId);
+		Product product = productRepository.get(productId);
 		if(product == null) {
 			throw new IllegalArgumentException("No such product: " + productId);
 		}
