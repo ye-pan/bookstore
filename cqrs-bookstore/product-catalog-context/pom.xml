@@ -11,8 +11,10 @@
 	<groupId>se.citerus.cqrs.bookstore.productcatalog</groupId>
 	<artifactId>product-catalog-context</artifactId>
 	<name>product-catalog-context</name>
-	<url>http://maven.apache.org</url>
-
+	<packaging>war</packaging>
+	<properties>
+		<skipTests>true</skipTests>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -63,6 +65,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
