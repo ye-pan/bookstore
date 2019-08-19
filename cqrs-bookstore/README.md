@@ -1,7 +1,9 @@
-#cqrs-bookstore
+# cqrs-bookstore
+
 frok from [criter bookstore-cqrs-example](https://github.com/citerus/bookstore-cqrs-example.git)
 
-#issue
+# issue
+
 1. 使用sping-boot改造cqrs-bookstore应用能够运行  ok
 2. 查看学习其中order-context ok
 3. 迁移order-context ok
