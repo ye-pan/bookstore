@@ -14,10 +14,8 @@ public class ProductCatalogClient {
 
 	@Value("${service.product.uri}")
 	private String uri;
-	@Value("${service.product.name}")
-	private String name;
 
-	private ProductCatalogClient(RestTemplate client) {
+	public ProductCatalogClient(RestTemplate client) {
 		this.client = client;
 	}
 	

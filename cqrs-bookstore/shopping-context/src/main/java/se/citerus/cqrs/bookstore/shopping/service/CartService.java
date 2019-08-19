@@ -18,7 +18,9 @@ import se.citerus.cqrs.bookstore.shopping.domain.ProductId;
 @Slf4j
 @Service
 public class CartService {
+
     private CartRepository cartRepository;
+
     private ProductCatalogClient productCatalogClient;
 
     public CartService(CartRepository cartRepository, ProductCatalogClient productCatalogClient) {

@@ -28,7 +28,6 @@ public class CartRepositoryTest {
     @Autowired
     private CartRepository cartRepository;
 
-    @InjectMocks
     @Autowired
     private CartService cartService;
 
